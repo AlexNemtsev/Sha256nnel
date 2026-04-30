@@ -1,0 +1,15 @@
+.hash {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-all;
+  font-size: 0.85rem;
+}
+
+.statusOk {
+  color: #198754;
+  font-weight: bold;
+}
+
+.statusFail {
+  color: #dc3545;
+  font-weight: bold;
+}

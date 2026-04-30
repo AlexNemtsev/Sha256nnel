@@ -1,62 +1,15 @@
-import { useState } from 'react';
 import { DropZone } from '../DropZone';
-import { HashesTable, type FileData } from '../HashesTable';
+import { HashesTable } from '../HashesTable';
 import { ProgressCounter } from '../ProgressCounter';
-import { sha256 } from '../common/utils/sha256';
+import { useHashes } from '../common/hooks/useHashes';
+import type { Manifest } from '../types/Manifest';
 
 import styles from './GenerationSection.module.css';
 
 export const GenerationSection = () => {
-  const [isHashing, setIsHashing] = useState(false);
-  const [totalFilesCount, setTotalFilesCount] = useState(0);
-  const [currentFile, setCurrentFile] = useState(0);
-  const [proceededFiles, setProceededFiles] = useState<FileData[]>([]);
+  const { currentFile, handleFiles, isHashing, proceededFiles, totalFilesCount } = useHashes();
 
-  const handleFilesDrop = async (files: FileList) => {
-    setIsHashing(true);
-    setTotalFilesCount(files.length);
-    setCurrentFile(0);
-    setProceededFiles([]);
-
-    const filesArray = Array.from(files);
-    let completedCount = 0;
-
-    const hashPromises = filesArray.map((file) =>
-      sha256(file)
-        .then((hash) => {
-          completedCount++;
-          setCurrentFile(completedCount);
-          return { file, hash, error: null };
-        })
-        .catch((error) => {
-          completedCount++;
-          setCurrentFile(completedCount);
-          return { file, hash: null, error };
-        })
-    );
-
-    const results = await Promise.all(hashPromises);
-
-    const processedResults: FileData[] = results.map(({ file, hash, error }) => {
-      if (hash) {
-        return {
-          name: file.name,
-          size: file.size,
-          hash,
-        };
-      } else {
-        return {
-          name: file.name,
-          error: JSON.stringify(error),
-        };
-      }
-    });
-
-    setProceededFiles(processedResults);
-    setIsHashing(false);
-  };
-
-  const manifest = {
+  const manifest: Manifest = {
     generated_at: new Date().toISOString(),
     tool: 'Sha256nnel',
     files: proceededFiles,
@@ -67,7 +20,14 @@ export const GenerationSection = () => {
 
   return (
     <div>
-      <DropZone dropLabel="Перетащите фото/видео сюда или" onDrop={handleFilesDrop} />
+      <DropZone
+        key="filesForGeneration"
+        id="filesForGeneration"
+        dropLabel="Перетащите фото/видео сюда или"
+        onDrop={handleFiles}
+        accept="image/*,video/*"
+        multiple
+      />
       {isHashing ||
         (!!proceededFiles.length && (
           <ProgressCounter current={currentFile} total={totalFilesCount} />

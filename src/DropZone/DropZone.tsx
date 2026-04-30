@@ -5,11 +5,15 @@ import styles from './DropZone.module.css';
 
 interface DropZoneProps {
   dropLabel: string;
+  buttonLabel?: string;
+  accept?: string;
+  multiple?: boolean;
+  id?: string;
   onDrop: (files: FileList) => void;
 }
 
 export const DropZone = (props: DropZoneProps) => {
-  const { dropLabel, onDrop } = props;
+  const { dropLabel, onDrop, buttonLabel, accept, multiple, id } = props;
 
   const [isDragging, setIsDragging] = useState(false);
 
@@ -32,16 +36,16 @@ export const DropZone = (props: DropZoneProps) => {
     >
       <div className={styles.inputContainer}>
         <p>{dropLabel}</p>
-        <label className={styles.button} htmlFor="fileInput">
-          Выбрать файлы
+        <label className={styles.button} htmlFor={id}>
+          {buttonLabel ?? 'Выбрать файлы'}
         </label>
       </div>
       <input
         type="file"
-        id="fileInput"
+        id={id}
         className={styles.hiddenInput}
-        multiple
-        accept="image/*,video/*"
+        multiple={multiple}
+        accept={accept}
         onChange={(e) => {
           const { files } = e.target;
           if (files) {
