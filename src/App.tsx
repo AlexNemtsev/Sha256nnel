@@ -16,6 +16,9 @@ const App = () => {
       <Tabs activeTab={activeTab} onChange={setActiveTab} />
       {activeTab === TabNames.GENERATION && <GenerationSection />}
       {activeTab === TabNames.VALIDATION && <ValidationSection />}
+      <a href="https://github.com/AlexNemtsev/Sha256nnel" target="_blank">
+        GitHub
+      </a>
     </div>
   );
 };
