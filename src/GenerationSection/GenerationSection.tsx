@@ -12,20 +12,17 @@ export const GenerationSection = () => {
   const { currentFile, handleFiles, isHashing, proceededFiles, totalFilesCount } = useHashes();
   const [manifestHash, setManifestHash] = useState('');
 
-  // Создаём манифест
   const manifest: Manifest = {
     generated_at: new Date().toISOString(),
     tool: 'Sha256nnel',
     files: proceededFiles,
   };
 
-  // Сериализуем манифест в строку для стабильного сравнения
   const manifestString = JSON.stringify(manifest, null, 2);
   const manifestBlob = new Blob([manifestString], { type: 'application/json' });
   const href = URL.createObjectURL(manifestBlob);
   const fileName = `manifest_${new Date().toISOString().slice(0, 10)}.json`;
 
-  // Пересчитываем хэш манифеста при каждом изменении proceededFiles
   useEffect(() => {
     if (proceededFiles.length === 0) {
       setManifestHash('');
@@ -37,13 +34,13 @@ export const GenerationSection = () => {
         const hash = await sha256(manifestBlob);
         setManifestHash(hash);
       } catch (error) {
-        console.error('Failed to compute manifest hash:', error);
+        console.error('Ошибка при вычислении хэша:', error);
         setManifestHash('Ошибка при вычислении хэша');
       }
     };
 
     computeManifestHash();
-  }, [manifestString]); // Зависимость от строки — чтобы пересчитывать при изменении содержимого
+  }, [manifestString]);
 
   return (
     <div>

@@ -7,10 +7,11 @@ import type { Manifest } from '../types/Manifest';
 import { ValidationTable, type ValidationResult } from '../ValidationTable';
 import { useManifest } from './useManifest';
 
+import styles from './ValidationSection.module.css';
+
 const compareHashes = (manifest: Manifest, files: FileData[]): ValidationResult[] => {
   const result: ValidationResult[] = [];
   const manifestMap = new Map(manifest.files.map((file) => [file.name, file.hash]));
-  console.log(files);
 
   files.forEach((file) => {
     if (!manifestMap.has(file.name)) {
@@ -40,8 +41,9 @@ const compareHashes = (manifest: Manifest, files: FileData[]): ValidationResult[
 
 export const ValidationSection = () => {
   const { currentFile, handleFiles, isHashing, proceededFiles, totalFilesCount } = useHashes();
-  const { handleManifest, manifestContent } = useManifest();
+  const { handleManifest, manifestContent, manifestHash } = useManifest();
   const [validationResult, setValidationResult] = useState<ValidationResult[] | null>(null);
+  const [expectedHash, setExpectedHash] = useState('');
 
   const onDropFiles = async (files: FileList) => {
     const hashes = await handleFiles(files);
@@ -50,8 +52,6 @@ export const ValidationSection = () => {
       setValidationResult(result);
     }
   };
-
-  console.log(validationResult);
 
   return (
     <div>
@@ -64,7 +64,28 @@ export const ValidationSection = () => {
         buttonLabel="Выбрать файл"
       />
       {manifestContent && (
-        <p>✅ Манифест загружен. Найдено файлов: {manifestContent.files.length}</p>
+        <>
+          <p>✅ Манифест загружен. Найдено файлов: {manifestContent.files.length}</p>
+          <p>Хэш манифеста: {manifestHash}</p>
+          <div className={styles.inputGroup}>
+            <label htmlFor="expectedManifestHash" className={styles.hashLabel}>
+              Ожидаемый хэш манифеста:{' '}
+            </label>
+            <input
+              type="text"
+              id="expectedManifestHash"
+              placeholder="Вставьте хэш"
+              className={styles.hashInput}
+              onChange={(event) => setExpectedHash(event.target.value)}
+            />
+            {expectedHash && expectedHash === manifestHash && (
+              <p>✅ Хэш сумма манифеста совпадает</p>
+            )}
+            {expectedHash && expectedHash !== manifestHash && (
+              <p>⚠️ Хэш сумма манифеста изменена</p>
+            )}
+          </div>
+        </>
       )}
       {manifestContent && (
         <DropZone
