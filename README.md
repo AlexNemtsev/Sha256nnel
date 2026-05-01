@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# Sha256nnel: Генерация и проверка хэшей
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sha256nnel — это веб-приложение для генерации и проверки SHA-256 хэшей файлов. Приложение позволяет создавать манифесты с хэшами файлов и проверять целостность файлов по существующим манифестам.
 
-Currently, two official plugins are available:
+## Основные возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Генерация хэшей**: Выберите файлы (изображения, видео) для вычисления их SHA-256 хэшей
+- **Создание манифеста**: Автоматическая генерация JSON-файла с хэшами всех выбранных файлов
+- **Проверка целостности**: Сравнение хэшей файлов с данными из манифеста
+- **Проверка подлинности манифеста**: Сравнение хэша манифеста с ожидаемым значением
+- **Интерфейс на русском языке**: Полностью локализованный интерфейс
 
-## React Compiler
+## Особенности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Работает полностью в браузере — файлы не загружаются на сервер
+- Поддержка перетаскивания файлов (drag-and-drop)
+- Постепенная обработка файлов с индикацией прогресса
+- Автоматическое вычисление хэша самого манифеста
 
-## Expanding the ESLint configuration
+## Как использовать
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Генерация хэшей
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Перейдите на вкладку "Генерация"
+2. Перетащите файлы в область загрузки или нажмите для выбора
+3. Дождитесь завершения обработки
+4. Скачайте манифест в формате JSON
+5. Скопируйте хэш манифеста для дальнейшей проверки подлинности
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Проверка целостности
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Перейдите на вкладку "Проверка"
+2. Загрузите манифест (JSON-файл, созданный ранее)
+3. Введите ожидаемый хэш манифеста (если известен)
+4. Загрузите файлы для проверки
+5. Просмотрите результаты: совпадающие и измененные файлы
+
+## Техническая информация
+
+- Реализовано на TypeScript с использованием React
+- Использует встроенный Web Crypto API для вычисления хэшей
+- Сборка с помощью Vite
+- Интерфейс использует компоненты React с CSS-модулями
+
+## Развертывание
+
+Приложение можно запустить локально:
+
+```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
+npm run dev
+
+# Сборка для production
+npm run build
+
+# Просмотр собранной версии
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Лицензия
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Проект находится под лицензией MIT.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## GitHub
+
+Исходный код доступен на GitHub: [https://github.com/AlexNemtsev/Sha256nnel](https://github.com/AlexNemtsev/Sha256nnel)
+
+## Deployment
+
+Данное приложение доступно на [Vercel](https://sha256nnel.vercel.app)
