@@ -24,7 +24,7 @@ export const GenerationSection = () => {
   const fileName = `manifest_${new Date().toISOString().slice(0, 10)}.json`;
 
   useEffect(() => {
-    if (proceededFiles.length === 0) {
+    if (proceededFiles.length !== totalFilesCount) {
       setManifestHash('');
       return;
     }
@@ -40,7 +40,7 @@ export const GenerationSection = () => {
     };
 
     computeManifestHash();
-  }, [manifestString]);
+  }, [proceededFiles]);
 
   return (
     <div>
