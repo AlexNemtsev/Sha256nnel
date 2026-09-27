@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { TabNames } from './common/constants/tabs';
   import GenerationSection from './components/GenerationSection.svelte';
   import Tabs from './components/Tabs.svelte';
   import ValidationSection from './components/ValidationSection.svelte';
   import './App.css';
+  import { TabNames } from './constants/tabs';
 
   let activeTab = $state<(typeof TabNames)[keyof typeof TabNames]>(TabNames.GENERATION);
 </script>

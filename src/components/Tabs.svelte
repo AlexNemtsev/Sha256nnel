@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TabNames } from '../common/constants/tabs';
+  import { TabNames } from '../constants/tabs';
 
   interface TabsProps {
     activeTab: (typeof TabNames)[keyof typeof TabNames];

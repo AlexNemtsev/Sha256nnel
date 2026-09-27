@@ -1,4 +1,4 @@
-import { sha256 } from '../common/utils/sha256';
+import { sha256 } from './sha256';
 import type { FileData } from '../types/FileData';
 import type { Manifest } from '../types/Manifest';
 

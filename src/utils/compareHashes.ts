@@ -1,6 +1,6 @@
-import type { FileData } from '../../types/FileData';
-import type { Manifest } from '../../types/Manifest';
-import type { ValidationResult } from '../../types/ValidationResult';
+import type { FileData } from '../types/FileData';
+import type { Manifest } from '../types/Manifest';
+import type { ValidationResult } from '../types/ValidationResult';
 
 export const compareHashes = (manifest: Manifest, files: FileData[]): ValidationResult[] => {
   const result: ValidationResult[] = [];

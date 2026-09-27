@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useHashes } from './useHashes.svelte';
+  import { useHashes } from '../utils/useHashes.svelte';
   import DropZone from './DropZone.svelte';
   import ProgressCounter from './ProgressCounter.svelte';
   import HashesTable from './HashesTable.svelte';

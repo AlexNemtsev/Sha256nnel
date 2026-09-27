@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { compareHashes } from '../common/utils/compareHashes';
+  import { compareHashes } from '../utils/compareHashes';
   import type { ValidationResult } from '../types/ValidationResult';
   import DropZone from './DropZone.svelte';
   import ProgressCounter from './ProgressCounter.svelte';
-  import { useHashes } from './useHashes.svelte';
-  import { useManifest } from './useManifest.svelte';
+  import { useHashes } from '../utils/useHashes.svelte';
   import ValidationTable from './ValidationTable.svelte';
+  import { useManifest } from '../utils/useManifest.svelte';
 
   const hashes = useHashes();
   const manifest = useManifest();
