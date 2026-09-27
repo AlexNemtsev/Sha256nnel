@@ -1,30 +1,33 @@
-import { useState } from 'react';
+import { sha256 } from './sha256';
 import type { Manifest } from '../types/Manifest';
-import { sha256 } from '../common/utils/sha256';
 
 export const useManifest = () => {
-  const [manifestContent, setManifestContent] = useState<Manifest | null>(null);
-  const [manifestHash, setManifestHash] = useState('');
+  let manifestContent = $state<Manifest | null>(null);
+  let manifestHash = $state<string>();
 
   const handleManifest = async (files: FileList) => {
     if (files.length > 0) {
       try {
         const text = await files[0].text();
         const manifest = JSON.parse(text) as Manifest;
-        setManifestContent(manifest);
+        manifestContent = manifest;
 
         const hash = await sha256(files[0]);
-        setManifestHash(hash);
+        manifestHash = hash;
       } catch (error) {
         alert(`Произошла ошибка: ${error}`);
-        setManifestContent(null);
+        manifestContent = null;
       }
     }
   };
 
   return {
-    manifestContent,
     handleManifest,
-    manifestHash,
+    get manifestContent() {
+      return manifestContent;
+    },
+    get manifestHash() {
+      return manifestHash;
+    },
   };
 };
