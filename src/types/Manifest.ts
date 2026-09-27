@@ -1,4 +1,4 @@
-import type { FileData } from '../HashesTable';
+import type { FileData } from './FileData';
 
 export interface Manifest {
   generated_at: string;
